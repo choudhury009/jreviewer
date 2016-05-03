@@ -1,0 +1,67 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'
+    '../app/Resources/public/css/reviewer.css'
+    '../bower_components/jquery-joyride/joyride-2.1.css' %}
+    <link href="{{ asset_url }} " type="text/css" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    {#<a style="float: right" id="homeTooltip" class="btn btn-info">?</a>#}
+    <div class="search-function" style="float:right;">
+        <form class="form-search" method="post" action="{{ url('review_search') }}">
+            <input type="text" id="search" name="search">
+            <button name="gSearch" class="btn btn-default">Google Search</button>
+        </form>
+    </div>
+    {% if books is defined and books != null %}
+        {% for book in books %}
+            {% if loop.index0 is odd %}
+            <div style="background-color:lightblue;padding: 0 0 35px 2px;">
+            {% else %}
+            <div style="padding-bottom: 10px;">
+            {% endif %}
+                <article>
+                {% if book.volumeInfo.industryIdentifiers[0].identifier is defined %}
+                    <div style="height: 150px;">
+                        {% if book.volumeInfo.imageLinks.smallThumbnail is defined %}
+                            <img src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" style="float: left;height: 130px;">
+                        {% endif %}
+                        <h3><a href="{{ path('review_googleBook', {id : book.id}) }}">{{ book.volumeInfo.title | title }}</a></h3>
+
+                        {% if book.volumeInfo.authors is defined %}
+                            <p>Author - {{ book.volumeInfo.authors[0] }}</p>
+                        {% endif %}
+                        {% if book.volumeInfo.subtitle is defined %}
+                            <p>{{ book.volumeInfo.subtitle }}</p>
+                        {% endif %}
+                        <form method="post" action="{{ url('review_create') }}">
+                            <input type="text" id="googleBook" name="googleBook" value="{{ book.id }}" style="display: none;">
+                            <button name="insertGoogleBook" class="btn btn-success">Add to JReviewer</button>
+                        </form>
+                    </div>
+                {% endif %}
+                </article>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-books" style="text-align: center;margin-top: 150px;">
+            <h2>Sorry, this book does not exist</h2>
+            <a href="{{ path('review_create') }}">Click here to create a book entry</a>
+        </div>
+    {% endif %}
+
+    {#{{ include('ReviewerReviewBundle:Tour:homeTour.html.twig') }}#}
+    {#{% javascripts#}
+    {#'../bower_components/jquery-joyride/jquery.joyride-2.1.js'#}
+    {#'@ReviewerUserBundle/Resources/public/js/userAccount.js'#}
+
+    {#filter='?uglifyjs2'#}
+    {#%}#}
+    {#<script src="{{ asset_url }}" type="text/javascript"></script>#}
+    {#{% endjavascripts %}#}
+{% endblock %}
+

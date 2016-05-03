@@ -1,0 +1,49 @@
+review_about:
+    pattern:    /about
+    defaults:   { _controller: ReviewerReviewBundle:Page:about }
+
+review_contact:
+    pattern:    /contact
+    defaults:   { _controller: ReviewerReviewBundle:Page:contact }
+
+review_index:
+    path:       /
+    defaults:   { _controller: ReviewerReviewBundle:Page:index }
+
+review_view:
+    path:       /view/{id}
+    defaults:   { _controller: ReviewerReviewBundle:Review:view }
+    requirements:
+        id: \d+
+
+review_create:
+    path:       /create
+    defaults:   { _controller: ReviewerReviewBundle:Review:create }
+
+review_addReview:
+    path:       /add/{id}
+    defaults:   { _controller: ReviewerReviewBundle:Review:add }
+
+review_bookShelf:
+    path:       /shelf/{id}
+    defaults:   { _controller: ReviewerReviewBundle:Review:shelf }
+
+review_search:
+    path:       /search
+    defaults:   { _controller: ReviewerReviewBundle:Page:search }
+
+review_vote:
+    path:       /vote/{bookId}/{reviewId}/{result}
+    defaults:   { _controller: ReviewerReviewBundle:Review:vote }
+
+review_delete:
+    path:       /delete/{bookId}/{reviewId}
+    defaults:   { _controller: ReviewerReviewBundle:Review:delete }
+
+review_edit:
+    path:       /edit/{bookId}/{reviewId}
+    defaults:   { _controller: ReviewerReviewBundle:Review:edit }
+
+review_googleBook:
+    path:       /view/googlebook/{id}
+    defaults:   { _controller: ReviewerReviewBundle:Review:googleBook }

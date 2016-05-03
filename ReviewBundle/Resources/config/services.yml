@@ -1,0 +1,7 @@
+services:
+#    reviewer_review.example:
+#        class: Reviewer\ReviewBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+#    reviewer_search:
+#      class

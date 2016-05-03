@@ -1,0 +1,63 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'
+    '../app/Resources/public/css/reviewer.css'
+    '../bower_components/jquery-joyride/joyride-2.1.css'
+    %}
+    <link href="{{ asset_url }} " type="text/css" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <a style="float: right" id="homeTooltip" class="btn btn-info">?</a>
+    <div class="search-function" style="float:right;">
+        <form class="form-search" method="post" action="{{ url('review_search') }}">
+            <input type="text" id="search" name="search">
+            <button class="btn btn-default">Search</button>
+            <button name="gSearch" class="btn btn-default">Google Search</button>
+        </form>
+    </div>
+
+    {% if count is defined and count != 0 %}
+        <div id="container-books">
+            {% for book in bookentries %}
+                {% if loop.index0 is odd %}
+                    <div style="background-color:lightblue;padding: 0 0 35px 2px;">
+                {% else %}
+                    <div style="padding-bottom: 10px;">
+                {% endif %}
+                    <article>
+                        {% if book.url is defined %}
+                            <img src="{{ book.url }}" style="float: left;height: 130px;">
+                        {% endif %}
+                        <h2><a href="{{ path('review_view', {id : book.id}) }}">{{ book.title | title }}</a></h2>
+                        {% media book.media, 'admin' with {'style': 'float:left;'} %}
+                        <p>{{ book.summary | nl2br }}</p>
+                        <p><small>Created by {{ book.uploader }} at {{ book.timestamp | date('H:i d/m/y') }} </small></p>
+                    </article>
+                </div>
+            {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(bookentries) }}
+            </div>
+        </div>
+    {% else %}
+        <div class="no-books" style="text-align: center;margin-top: 150px;">
+            <h2>Sorry, no books have been found</h2>
+            <a href="{{ path('review_create') }}">Click here to create a book entry</a>
+        </div>
+    {% endif %}
+
+    {{ include('ReviewerReviewBundle:Tour:homeTour.html.twig') }}
+    {% javascripts
+    '../bower_components/jquery-joyride/jquery.joyride-2.1.js'
+    '@ReviewerUserBundle/Resources/public/js/userAccount.js'
+
+        filter='?uglifyjs2'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+

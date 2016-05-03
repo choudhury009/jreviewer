@@ -1,0 +1,13 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block title %}Add a Review{% endblock %}
+{% block body %}
+    {% if app.user.id == userId %}
+        {% if book_name is defined %}<h2>{{ book_name }}</h2>{% endif %}
+        <div style="padding: 50px;margin:0 auto;background-color: #b9def0">
+            {{ form(form) }}
+        </div>
+        {% else %}
+        Sorry access denied.
+        {% endif %}
+{% endblock %}

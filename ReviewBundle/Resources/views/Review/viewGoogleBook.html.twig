@@ -1,0 +1,44 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if book[0].volumeInfo.title is defined %}{{ book[0].volumeInfo.title }}{% endif %}
+{% endblock %}
+{% block body %}
+    {% set book = book[0] %}
+    {% if book is defined and book != null %}
+        <h2>{{ book.volumeInfo.title }} </h2>
+        {% if book.volumeInfo.subtitle is defined %}
+            <h4>{{ book.volumeInfo.subtitle }}</h4>
+        {% endif %}
+        {% if book.volumeInfo.authors is defined %}
+            <p>Author - {{ book.volumeInfo.authors[0] }}</p>
+        {% endif %}
+        {% if book.volumeInfo.description is defined %}
+            <p><strong>Book description</strong></p>
+            {% if book.volumeInfo.imageLinks.smallThumbnail is defined %}
+                <img src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" style="float: right;height: 130px;">
+            {% endif %}
+            <p>{{ book.volumeInfo.description }}</p>
+        {% endif %}
+        {% if book.volumeInfo.averageRating is defined %}
+            <p><strong>Rating</strong></p>
+            <p>Average rating - {{ book.volumeInfo.averageRating }}</p>
+            <p>Rating count - {{ book.volumeInfo.ratingsCount }}</p>
+        {% endif %}
+        {% if book.volumeInfo.publisher is defined %}
+        <p><strong>Published details </strong></p>
+            <p>Publisher - {{ book.volumeInfo.publisher }}</p>
+            {% if book.volumeInfo.publishedDate is defined %}
+                <p>Published date - {{ book.volumeInfo.publishedDate }}</p>
+            {% endif %}
+        {% endif %}
+        {% if book.volumeInfo.infoLink is defined %}
+            <p><a href="{{ book.volumeInfo.infoLink }}">Click here to view this book in Google books</a></p>
+        {% endif %}
+    {% else %}
+        <div class="no-books" style="text-align: center;margin-top: 150px;">
+            <h2>Sorry, this book does not exist</h2>
+            <a href="{{ path('review_create') }}">Click here to create a book entry</a>
+        </div>
+    {% endif %}
+{% endblock %}

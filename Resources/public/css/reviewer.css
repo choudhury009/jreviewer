@@ -1,0 +1,62 @@
+a {
+    color: cornflowerblue;
+}
+a:hover {
+    color: #5bc0de;
+}
+.nav-sidebar li a:hover {
+    color:black;
+}
+
+a.right {
+    display: inline-block;
+    text-align: right;
+    width: 100%;
+    font-size: 20px;
+}
+
+.change-pass {
+    padding: 100px 150px 150px 250px;
+    margin:0 auto;
+    background-color: #b9def0;
+}
+.page-title {
+    background-color:#b9def0;
+    text-align: center;
+}
+.fix-align {
+    width:200px;
+}
+.book-cont {
+    width: 50%;
+    height: 165px;
+    padding: 5px;
+    border: 2px solid gray;
+    float: left;
+    background-color: #b9def0;
+}
+
+.animate {
+    margin:0 auto;
+    height: auto;
+    width: auto;
+    padding: 100px 150px 150px 250px;
+    -webkit-animation: animate_bg 5s;
+    animation: animate_bg 5s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animate_bg {
+    0%   {background:white;}
+    30%  {background:lightblue}
+    55%  {background:deepskyblue;}
+    90%  {background:white}
+}
+
+@-webkit-keyframes animate_bg {
+    0%   {background:white;}
+    20%  {background:lightblue}
+    55%  {background:deepskyblue;}
+    90%  {background:white}
+}

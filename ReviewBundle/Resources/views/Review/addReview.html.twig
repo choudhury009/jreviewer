@@ -1,0 +1,9 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block title %}Add a Review{% endblock %}
+{% block body %}
+    {% if book_name is defined %}<h2>{{ book_name }}</h2>{% endif %}
+    <div style="padding: 50px;margin:0 auto;background-color: #b9def0">
+        {{ form(form) }}
+    </div>
+{% endblock %}

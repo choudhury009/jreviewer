@@ -1,0 +1,16 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block title %}Add a book{% endblock %}
+{% block body %}
+    {% if msg is defined and msg != null %}
+        <div class="alert alert-danger">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{ msg }}</strong>
+        </div>
+    {% endif %}
+
+    <h2>Add a book to JReviewer</h2>
+    <div style="padding: 50px;margin:0 auto;background-color: #b9def0">
+        {{ form(form) }}
+    </div>
+{% endblock %}

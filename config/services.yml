@@ -1,0 +1,24 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    reviewer_user.change_password.form.type:
+        class: Reviewer\UserBundle\Form\Type\ChangePasswordType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: reviewer_user_change_password }
+
+    reviewer.exception_listener:
+        class: Reviewer\ReviewBundle\EventListener\ExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    app.provider.oauth:
+        class: Reviewer\UserBundle\Security\Core\User\OAuthUserProvider
+        arguments: [@fos_user.user_manager,{facebook: facebookID, google: googleID}]

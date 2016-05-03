@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block sidebar %}
+        <div class="items open">
+            <ul class="nav nav-sidebar">
+                <li><a href="{{ path('review_index') }}" class="btn-info">Home</a></li>
+                <li><a href="{{ path('review_create') }}" class="btn-info">Add book</a></li>
+            </ul>
+        </div>
+    {% javascripts
+    '@ReviewerUserBundle/Resources/public/js/userAccount.js'
+    filter='?uglifyjs2'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}

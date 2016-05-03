@@ -1,0 +1,48 @@
+{# home page tour tips #}
+
+<ol id="homeTour" style="display: none;">
+    {#<li>Welcome to JReviewer you will be given a tour </li>#}
+    <li data-id="user-account" data-options="tipLocation:left;tipAnimation:fade">
+        <h4>My account</h4>
+        <p>Within My account you will be able to see all your stored books under 'My shelf'.</p>
+        <p>There is also options to change your password and remove your account.</p>
+    </li>
+    <li data-id="about-page" data-options="tipLocation:left;tipAnimation:fade">
+        <h4>About JReviewer</h4>
+        <p>Want to know more about JReviewer? This is the place to go.</p>
+    </li>
+    <li data-id="contact-page" data-options="tipLocation:left;tipAnimation:fade">
+        <h4>Contact</h4>
+        <p>All our contact information and where to find us will be here.</p>
+    </li>
+    {% if app.user %}
+        <li data-id="logout-button" data-options="tipLocation:left;tipAnimation:fade">
+            <h4>Logout</h4>
+            <p>Click this button to log out of JReviewer</p>
+        </li>
+    {% else %}
+        <li data-id="login-button" data-options="tipLocation:left;tipAnimation:fade">
+            <h4>Login</h4>
+            <p>Login to JReviewer</p>
+        </li>
+    {% endif %}
+    <li data-class="items" data-options="tipLocation:right;tipAnimation:fade">
+        <h4>Side navigation</h4>
+        <p>This is the side navigation, it will change depending on what page your currently on.</p>
+    </li>
+    <li data-class="search-function" data-options="tipLocation:left;tipAnimation:fade">
+        <h4>Search</h4>
+        <p>Search for all your favourite books.</p>
+        <p>You can search by title and author!</p>
+    </li>
+    <li data-button="Close">
+        <h4>All books</h4>
+        <p>Here you can see all the recently added books.</p>
+        <p>You can add a book if your desired book hasn't matched your search.</p>
+    </li>
+    {#/* using 'data-button' lets you have custom button text */#}
+    {#<li data-class="parent-element-class" data-options="tipLocation:top;tipAnimation:fade" data-button="Second Button">Content...</li>#}
+
+    {#/* you can put a class for custom styling */#}
+    {#<li data-id="parentElementID" class="custom-class">Content...</li>#}
+</ol>

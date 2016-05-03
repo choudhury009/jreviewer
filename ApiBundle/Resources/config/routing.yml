@@ -1,0 +1,11 @@
+api_book:
+    type: rest
+    resource: Reviewer\ApiBundle\Controller\BookController
+    name_prefix: api_book_
+    prefix: /
+
+api_review:
+    type: rest
+    resource: Reviewer\ApiBundle\Controller\ReviewController
+    name_prefix: api_review_
+    prefix: /

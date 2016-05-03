@@ -1,0 +1,72 @@
+{% extends 'ReviewerReviewBundle::layout.html.twig' %}
+
+{% block title %}
+    {% if book.title is defined %}{{ book.title }}{% endif %}
+{% endblock %}
+{% block body %}
+    {% if book is defined and book != null %}
+        {% if msg is defined and msg != null %}
+            <div class="alert alert-danger">
+                <a href="{{ path('review_view', {'id':book.id}) }}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ msg }}</strong>
+            </div>
+        {% endif %}
+        <h1>{{ book.title }} </h1>
+        <p>Author - {{ book.author }}</p>
+        <p><strong>Plot Summary</strong></p>
+        {% if book.url is defined %}
+            <img src="{{ book.url }}" style="float: right;height: 130px;">
+        {% endif %}
+        {% media book.media, 'admin' with {'style': 'float:right;'} %}
+        <p>{{ book.summary }}</p>
+        <h3><strong>Review</strong></h3>
+        <p>{{ book.review|nl2br }} </p>
+        <p><small>Reviewed by {{ book.uploader }} at {{ book.timestamp|date('H:i d/m/y') }}</small></p>
+
+        <div class="add-review-container">
+            {% if hasReviewed != true %}
+                <a href="{{ path('review_addReview', {id : book.id}) }}" class="btn btn-info">Post Your Review</a>
+            {% endif %}
+            {% if inShelf != true %}
+                <a href="{{ path('review_bookShelf', {id : book.id}) }}" class="btn btn-info">Add Book to Shelf</a>
+            {% endif %}
+            <hr style="border: 1px solid;">
+            <p id="reviewCount"></p>
+            <ul id="review-list" style="list-style-type: none;">
+            {% for review in reviews %}
+                <li style="border-bottom: 1px solid;">
+                    <div class="vote" style="font-size:25px;float:left">
+                        <a href="{{ path('review_vote', {'bookId':book.id,'reviewId':review.id,'result':'up'}) }}" class="vote-up" title="This review is useful">&#9650;</a>
+                        <span class="vote-count">{{ review.votes }}</span>
+                        <a href="{{ path('review_vote', {'bookId':book.id,'reviewId':review.id,'result':'down'}) }}" class="vote-down" title="This review is not useful">&#9660;</a>
+                    </div>
+                    <div>
+                        <h2>{{ review.author }}</h2>
+                        <p {% if is_granted('ROLE_ADMIN') %}style=""{% endif %}>{{ review.review|nl2br }}</p>
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('review_delete', {'bookId':book.id,'reviewId':review.id}) }}" class="btn btn-danger" style="float:left;" title="Delete review">Delete</a>
+                    {% endif %}
+                    {% if app.user.id is defined %}
+                        {% if (app.user.id == review.author.id) or is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('review_edit',{'bookId':book.id,'reviewId':review.id}) }}" class="btn btn-info">Edit</a>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="no-books" style="text-align: center;margin-top: 150px;">
+            <h2>Sorry, this book does not exist</h2>
+            <a href="{{ path('review_create') }}">Click here to create a book entry</a>
+        </div>
+    {% endif %}
+
+    {% javascripts
+    '@ReviewerUserBundle/Resources/public/js/userAccount.js'
+    filter='?uglifyjs2'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}

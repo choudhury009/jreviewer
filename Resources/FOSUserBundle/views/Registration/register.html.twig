@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block sidebar %}
+    <div class="items open">
+        <ul class="nav nav-sidebar">
+            <li><a href="{{ path('review_index') }}" class="btn-info">Home</a></li>
+        </ul>
+    </div>
+    {% javascripts
+    '@ReviewerUserBundle/Resources/public/js/userAccount.js'
+    filter='?uglifyjs2'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+    {# override of FOS register page #}
+    <h2 class="page-title">JReviewer registration</h2>
+    <div class="animate">
+        <label>
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+            {{ form_widget(form) }}
+        </label>
+        <div class="fix-align">
+            <label>
+                <input class="btn btn-success" type="submit" value="Register" />
+                {% if 'profile' not in app.request.attributes.get('_route') %}
+                    {% if 'register' in app.request.attributes.get('_route') %}
+                        <a class="btn btn-info" href="{{ path('fos_user_security_login') }}">Login</a>
+                    {% else %}
+                        <a class="btn btn-info" href="{{ path('fos_user_registration_register') }}">Register</a>
+                    {% endif %}
+                {% endif %}
+            </label>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
